@@ -83,7 +83,7 @@ class Api {
       body: JSON.stringify({ avatar })
     })
     .then(this._checkResponse)
-  }
+  }  
 }
 
 const api = new Api({
@@ -95,3 +95,4 @@ const api = new Api({
 });
 
 export default api;
+
