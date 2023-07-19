@@ -1,6 +1,7 @@
 import infoImageSuccess from "../images/union.png";
 import infoImageFailure from "../images/union-failure.png";
 import { useNavigate } from 'react-router-dom';
+import Popup from "./Popup";
 
 function InfoTooltip(props) { 
 
@@ -16,13 +17,10 @@ function InfoTooltip(props) {
   };
 
   return (
-    <div className={`popup info-popup ${props.isOpen && 'popup_opened'}`}>
-      <div className="info-popup__container">
-        <button className="info-popup__close-button" onClick={closeInfoPopup} name="close-button" type="button" value="close-popup"></button>
-        <img className="info-popup__image"alt={isRegisterSuccess()} src={props.isRegisterSuccess ? infoImageSuccess : infoImageFailure} />
-        <p className="info-popup__text">{isRegisterSuccess()}</p>
-      </div>
-    </div>
+    <Popup isOpen={props.isOpen} onClose={closeInfoPopup} popupContainer="info-popup__container">      
+      <img className="info-popup__image" alt={isRegisterSuccess()} src={props.isRegisterSuccess ? infoImageSuccess : infoImageFailure} />
+      <p className="info-popup__text">{isRegisterSuccess()}</p>
+    </Popup>
   )
 }
 

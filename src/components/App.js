@@ -16,6 +16,7 @@ import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
 import api from "../utils/api";
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import checkResponse from '../utils/checkResponse.js';
 
 function App() {
 
@@ -174,9 +175,14 @@ function App() {
   
   function handleRegistrationSubmit(password, email) {
     auth.registerUser(password, email)
-    .then((res) => {  
-      res.ok && setRegisterSuccess(true);         
-      return res.json();
+    .then((res) => { 
+      if (res.ok) {
+        setRegisterSuccess(true)         
+        return res.json();
+      } else {
+        setInfoPopupOpen(true);
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }      
     })
     .then((res) => {
       setInfoPopupOpen(true);    
@@ -189,9 +195,7 @@ function App() {
 
   function handleAuthSubmit(password, email) {
     auth.authorizeUser(password, email)
-      .then((res) => {
-        return res.json();
-      })
+      .then(checkResponse)      
       .then((data) => {        
         if (data.token) {
           localStorage.setItem('token', data.token);
@@ -213,8 +217,8 @@ function App() {
   const handleTokenCheck = () => {
     if (localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
-      auth.checkToken(token)
-      .then(res => res.json())
+      auth.checkToken(token) 
+      .then(checkResponse)     
       .then((data) => {                               
         if(data) {
           setUserEmail(data.data.email);           

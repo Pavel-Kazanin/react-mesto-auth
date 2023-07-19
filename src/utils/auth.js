@@ -1,7 +1,7 @@
 class Auth {
   constructor(options) {
     this._url = options.url;    
-  }
+  }  
 
   registerUser(password, email) {
     return fetch(`${this._url}/signup`, {
@@ -10,7 +10,7 @@ class Auth {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({password, email})
-    })
+    })    
   }
 
   authorizeUser(password, email) {
@@ -20,7 +20,7 @@ class Auth {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({password, email})
-    })
+    })    
   }
 
   checkToken(token) {
@@ -30,7 +30,7 @@ class Auth {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-    })    
+    })        
   }
 }
 
